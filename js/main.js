@@ -4,6 +4,50 @@ const deg = 45;
 const len = lists.length-1;
 let i = 0;
 
+const prev = document.querySelector(".btnPrev");
+const next = document.querySelector(".btnNext");
+
+const audio = frame.querySelectorAll("audio");
+
+let num = 0;
+let active = 0;
+
+function activation(index, lists) {
+    for(let el of lists) {
+        el.classList.remove("on");
+    }
+    lists[index].classList.add("on");
+}
+
+function initMusic() {
+    for(let el of audio) {
+        el.pause();
+        el.load();
+        el.parentElement.previousElementSibling.classList.remove("on");
+    }
+}
+
+prev.addEventListener("click", () => {
+
+    initMusic();
+    num++;
+    frame.style.transform = `rotate(${deg * num}deg)`;
+
+    (active === 0) ? active = len : active--;
+    activation(active, lists);
+});
+
+next.addEventListener("click", () => {
+
+    initMusic();
+    num--;
+    frame.style.transform = `rotate(${deg * num}deg)`;
+
+    (active === 0) ? active = len : active++;
+    activation(active, lists);
+});
+
+
 for(let el of lists) {
 
     let pic = el.querySelector(".pic");
